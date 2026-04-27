@@ -45,7 +45,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          RUN_ID=$(gh run list --repo ${{ github.repository }} --workflow=vpinball.yml --status=success --limit=1 --json databaseId -q '.[0].databaseId')
+          RUN_ID=$(gh run list --repo ${{ github.repository }} --workflow=vpinball.yml --limit=20 --json databaseId,conclusion -q 'map(select(.conclusion=="success")) | .[0].databaseId')
           echo "run_id=${RUN_ID}" >> $GITHUB_OUTPUT
       - name: Download artifacts
         uses: actions/download-artifact@v8
