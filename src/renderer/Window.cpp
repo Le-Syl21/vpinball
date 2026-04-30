@@ -201,6 +201,7 @@ Window::Window(const string& title, const Settings& settings, VPXWindowId window
       m_refreshrate = 60;
    }
    SDL_PropertiesID props;
+   bool useLinuxDesktopFullscreen = false;
    if (isExtCreatedWindow)
    {
       #ifdef __LIBVPINBALL__
@@ -232,6 +233,23 @@ Window::Window(const string& title, const Settings& settings, VPXWindowId window
          wnd_flags |= SDL_WINDOW_UTILITY | SDL_WINDOW_ALWAYS_ON_TOP;
       #endif
 
+      // On Linux/X11 (Mutter, KWin) the requested position is ignored once the window is mapped:
+      // a borderless playfield sized exactly to its target display gets relocated by the WM to the
+      // currently focused display. On Wayland, SDL_SetWindowPosition is unsupported by design.
+      // When the requested size matches the target display, switch to a desktop-mode fullscreen
+      // request: the WM honors the target display and there is no video mode change (so it does
+      // not trigger the same regressions as exclusive fullscreen).
+      #if !defined(_MSC_VER) && !defined(__APPLE__) && !defined(__ANDROID__)
+      if (!m_fullscreen
+          && m_windowId == VPXWindowId::VPXWINDOW_Playfield
+          && m_width == selectedDisplay.width
+          && m_height == selectedDisplay.height)
+      {
+         useLinuxDesktopFullscreen = true;
+         wnd_flags |= SDL_WINDOW_FULLSCREEN;
+      }
+      #endif
+
       // Prevent full screen window from minimizing when re-arranging external windows
       SDL_SetHint(SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS, "0");
 
@@ -257,6 +275,16 @@ Window::Window(const string& title, const Settings& settings, VPXWindowId window
    if (fullscreenDisplayMode)
    {
       SDL_SetWindowFullscreenMode(m_nwnd, fullscreenDisplayMode);
+      SDL_SetWindowFullscreen(m_nwnd, true);
+      SDL_SyncWindow(m_nwnd);
+   }
+   else if (useLinuxDesktopFullscreen)
+   {
+      // Pass the desktop mode of the *target* display so Wayland/X11 fullscreen on the right
+      // monitor (NULL would fullscreen on whichever display the WM put the window on initially,
+      // which on Wayland is arbitrary). The desktop mode does not change the video mode.
+      const SDL_DisplayMode* targetDesktopMode = SDL_GetDesktopDisplayMode(selectedDisplay.display);
+      SDL_SetWindowFullscreenMode(m_nwnd, targetDesktopMode);
       SDL_SetWindowFullscreen(m_nwnd, true);
       SDL_SyncWindow(m_nwnd);
    }
