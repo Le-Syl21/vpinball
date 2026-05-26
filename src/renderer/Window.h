@@ -129,8 +129,16 @@ private:
 
    SDL_Window* m_nwnd = nullptr;
 
-   SDL_DisplayID m_targetDisplayId = 0; // intended display from settings, used by Show() to log requested vs WM-placed position
+   SDL_DisplayID m_targetDisplayId = 0; // intended display from settings, used by Show() to log requested vs WM-placed position and (on Linux) trigger the multi-monitor placement fixup
    bool m_placementLogged = false;
+
+#if !defined(_MSC_VER) && !defined(__APPLE__) && !defined(__ANDROID__)
+   // Linux multi-monitor placement workaround (see Window.cpp constructor / Show()). A screen-sized
+   // borderless playfield can be mis-placed by the compositor (Mutter X11/Wayland) onto the wrong
+   // display; detected after the window is first mapped and corrected with a desktop-mode fullscreen
+   // request on the intended display. Compositors that honor placement (wlroots) are left untouched.
+   bool m_linuxPlaceByFullscreen = false;
+#endif
 };
 
 class RenderOutput final

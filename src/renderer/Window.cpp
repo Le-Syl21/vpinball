@@ -250,6 +250,25 @@ Window::Window(const string& title, const Settings& settings, VPXWindowId window
          SDL_SetBooleanProperty(props, SDL_PROP_WINDOW_CREATE_EXTERNAL_GRAPHICS_CONTEXT_BOOLEAN, true);
       m_nwnd = SDL_CreateWindowWithProperties(props);
       SDL_DestroyProperties(props);
+
+      #if !defined(_MSC_VER) && !defined(__APPLE__) && !defined(__ANDROID__)
+      // On Linux, a borderless playfield sized exactly to its target display is frequently mis-placed
+      // on multi-monitor setups: Mutter (GNOME/Cinnamon/Unity/...) ignores the requested position once
+      // the window is mapped and relocates it to the focused display (X11) or places it arbitrarily
+      // (Wayland, where client positioning is unsupported by design). wlroots compositors (sway,
+      // Hyprland, ...) honor the requested placement and user window rules and need none of this.
+      // Rather than unconditionally forcing fullscreen (which would override those user rules on
+      // wlroots), arm a one-shot check that runs once the window is actually mapped (first Show) and
+      // only falls back to a desktop-mode fullscreen on the intended display if it ended up elsewhere.
+      // See Window::Show().
+      if (!m_fullscreen
+          && m_windowId == VPXWindowId::VPXWINDOW_Playfield
+          && m_width == selectedDisplay.width
+          && m_height == selectedDisplay.height)
+      {
+         m_linuxPlaceByFullscreen = true;
+      }
+      #endif
    }
 
    props = SDL_GetWindowProperties(m_nwnd);
@@ -307,7 +326,7 @@ void Window::Show(const bool show)
       if (!m_placementLogged)
       {
          m_placementLogged = true;
-         SDL_SyncWindow(m_nwnd);
+         SDL_SyncWindow(m_nwnd); // let the compositor map and place the window before we query it
          const SDL_DisplayID actualDisp = SDL_GetDisplayForWindow(m_nwnd);
          int wx = 0, wy = 0, ww = 0, wh = 0;
          SDL_GetWindowPosition(m_nwnd, &wx, &wy);
@@ -315,6 +334,23 @@ void Window::Show(const bool show)
          PLOGI << "Window #" << m_windowId << " first mapped: requested display=" << m_targetDisplayId
                << " | WM placed display=" << actualDisp
                << " at (" << wx << ',' << wy << ") " << ww << 'x' << wh;
+
+         #if !defined(_MSC_VER) && !defined(__APPLE__) && !defined(__ANDROID__)
+         // One-shot Linux multi-monitor placement fixup (see constructor). When the playfield was
+         // placed on the wrong display (Mutter), switch to a desktop-mode fullscreen on the intended
+         // display: this is the only primitive both X11 and Wayland honor for "put this window on
+         // display X". Passing the *target* desktop mode (not NULL) ensures the right monitor is
+         // picked even on Wayland; it does not change the video mode, so it avoids the regressions
+         // of exclusive fullscreen. wlroots compositors placed the window correctly and skip this.
+         if (m_linuxPlaceByFullscreen && actualDisp != m_targetDisplayId)
+         {
+            const SDL_DisplayMode* const targetDesktopMode = SDL_GetDesktopDisplayMode(m_targetDisplayId);
+            SDL_SetWindowFullscreenMode(m_nwnd, targetDesktopMode);
+            SDL_SetWindowFullscreen(m_nwnd, true);
+            SDL_SyncWindow(m_nwnd);
+            PLOGI << "Playfield was mis-placed by the compositor; corrected via desktop-mode fullscreen on the target display.";
+         }
+         #endif
       }
    }
    else
