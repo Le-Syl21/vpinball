@@ -213,6 +213,28 @@ Window::Window(const string& title, const Settings& settings, VPXWindowId window
    }
    else
    {
+      // Linux multi-monitor pin: when the requested window matches its target display in size,
+      // anchor it to that display via xdg_toplevel.set_fullscreen(output) (Wayland) or
+      // _NET_WM_STATE_FULLSCREEN + _NET_WM_FULLSCREEN_MONITORS (X11). Both are the only
+      // protocol-level primitives that pin a toplevel to a specific monitor: Wayland forbids
+      // client positioning by design, and Mutter X11 routes borderless screen-sized NORMAL
+      // toplevels to the focused display irrespective of X/Y hints. Fullscreen state implies
+      // no decoration drawn (no need for SDL_WINDOW_BORDERLESS) and keeps the surface above
+      // local content on its output (no need for SDL_WINDOW_UTILITY|ALWAYS_ON_TOP for auxiliary
+      // windows on Wayland; on X11 the same is provided by the fullscreen state itself). Runtime
+      // check on the SDL video driver keeps macOS / Windows / Android paths untouched.
+      #if !defined(_MSC_VER) && !defined(__APPLE__) && !defined(__ANDROID__)
+      const char* const sdlDriver = SDL_GetCurrentVideoDriver();
+      const bool isLinuxDesktop = (sdlDriver != nullptr)
+                                  && (strcmp(sdlDriver, "wayland") == 0 || strcmp(sdlDriver, "x11") == 0);
+      const bool pinToOutput = isLinuxDesktop
+                               && !m_fullscreen
+                               && m_width == selectedDisplay.width
+                               && m_height == selectedDisplay.height;
+      #else
+      constexpr bool pinToOutput = false;
+      #endif
+
       uint32_t wnd_flags = 0;
       #if defined(ENABLE_OPENGL)
          wnd_flags |= SDL_WINDOW_OPENGL; // Leads to read OpenGL context hint (swapchain backbuffer format, ...)
@@ -223,16 +245,18 @@ Window::Window(const string& title, const Settings& settings, VPXWindowId window
       #elif defined(ENABLE_DX9)
          // DX9 does not need any special flag either
       #endif
-      wnd_flags |= SDL_WINDOW_BORDERLESS | SDL_WINDOW_HIDDEN | SDL_WINDOW_HIGH_PIXEL_DENSITY;
+      wnd_flags |= SDL_WINDOW_HIDDEN | SDL_WINDOW_HIGH_PIXEL_DENSITY;
+      if (!pinToOutput) // fullscreen state already implies borderless on both X11 and Wayland
+         wnd_flags |= SDL_WINDOW_BORDERLESS;
       #if defined(_MSC_VER) // Win32 (we use _MSC_VER since standalone also defines WIN32 for non Win32 builds)
          SDL_SetHint(SDL_HINT_FORCE_RAISEWINDOW, "1");
       #endif
-      if (m_fullscreen)
+      if (m_fullscreen || pinToOutput)
          wnd_flags |= SDL_WINDOW_FULLSCREEN;
 
       #if !defined(_MSC_VER) // Win32 (we use _MSC_VER since standalone also defines WIN32 for non Win32 builds)
       // On Windows, always on top is not always respected and if using SDL_WINDOW_UTILITY windows may end up being hidden with no way to select and move them
-      if (m_windowId != VPXWindowId::VPXWINDOW_Playfield)
+      if (m_windowId != VPXWindowId::VPXWINDOW_Playfield && !pinToOutput)
          wnd_flags |= SDL_WINDOW_UTILITY | SDL_WINDOW_ALWAYS_ON_TOP;
       #endif
 
@@ -250,6 +274,13 @@ Window::Window(const string& title, const Settings& settings, VPXWindowId window
          SDL_SetBooleanProperty(props, SDL_PROP_WINDOW_CREATE_EXTERNAL_GRAPHICS_CONTEXT_BOOLEAN, true);
       m_nwnd = SDL_CreateWindowWithProperties(props);
       SDL_DestroyProperties(props);
+
+      // Anchor the pinned window to the target display via its desktop mode. No video mode change
+      // (we pass the current desktop mode), which lets the existing fullscreen switch below pin
+      // the window to the intended output without the regressions exclusive fullscreen has on
+      // some drivers.
+      if (pinToOutput && !fullscreenDisplayMode)
+         fullscreenDisplayMode = SDL_GetDesktopDisplayMode(selectedDisplay.display);
    }
 
    props = SDL_GetWindowProperties(m_nwnd);
