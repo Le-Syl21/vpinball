@@ -128,6 +128,9 @@ private:
    class RenderTarget* m_backBuffer = nullptr;
 
    SDL_Window* m_nwnd = nullptr;
+
+   SDL_DisplayID m_targetDisplayId = 0; // intended display from settings, used by Show() to log requested vs WM-placed position
+   bool m_placementLogged = false;
 };
 
 class RenderOutput final
