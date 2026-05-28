@@ -346,6 +346,15 @@ void Window::Show(const bool show)
          PLOGI << "Window #" << m_windowId << " first mapped: requested display=" << m_targetDisplayId
                << " | WM placed display=" << actualDisp
                << " at (" << wx << ',' << wy << ") " << ww << 'x' << wh;
+
+         // Mutter Wayland does not automatically focus a newly-mapped fullscreen toplevel when
+         // sibling fullscreen toplevels of the same app_id were just mapped on adjacent outputs
+         // (the Backglass/ScoreView pin path). Without this, the user has to Alt+Tab to bring
+         // input focus back to the Playfield. Raise the Playfield explicitly on its first show
+         // so input lands on it by default. Harmless no-op on compositors that already focus
+         // the last-mapped toplevel.
+         if (m_windowId == VPXWindowId::VPXWINDOW_Playfield)
+            SDL_RaiseWindow(m_nwnd);
       }
    }
    else
