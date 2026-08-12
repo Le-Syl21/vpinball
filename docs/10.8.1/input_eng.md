@@ -1,6 +1,6 @@
 # Input and nudge in 10.8.1
 
-[← Index](README.md) · 🇬🇧 English · [🇫🇷 Français](input_fra.md)
+[← Index](README.md#-english) · 🇬🇧 English · [🇫🇷 Français](input_fra.md)
 
 10.8.1 replaced the plunger and nudge input handling. The old
 `Mapping.PlungerPos` / `Mapping.NudgeX1` keys are gone and are no longer read.
