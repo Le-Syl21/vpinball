@@ -1,6 +1,6 @@
 # Entrées et nudge en 10.8.1
 
-[🇬🇧 English](input_eng.md) · 🇫🇷 Français
+[← Index](README_fra.md) · [🇬🇧 English](input_eng.md) · 🇫🇷 Français
 
 La 10.8.1 a remplacé la gestion des entrées du plongeur et du nudge. Les
 anciennes clés `Mapping.PlungerPos` / `Mapping.NudgeX1` ont disparu et ne sont
