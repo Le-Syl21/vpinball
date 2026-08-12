@@ -1,6 +1,9 @@
 name: vpinball
 on:
-  push:
+  # Fork: builds are manual. Upstream builds on every push, which on a fork
+  # means a 25-target matrix for a documentation typo. Use the Actions tab
+  # (Run workflow) when a build is actually wanted.
+  # push:
   # pull_request:
   workflow_dispatch:
     inputs:
