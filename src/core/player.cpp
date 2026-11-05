@@ -441,13 +441,10 @@ Player::Player(PinTable *const table, const PlayMode playMode, LoadProgress &loa
             m_renderer->m_renderDevice->SetRenderTarget("Prime Ancillary"s, out->GetWindow()->GetBackBuffer(), false, true);
             m_renderer->m_renderDevice->Clear(clearType::TARGET, 0x00000000);
             primed = true;
+            SubmitFrame();
+            FinishFrame();
+            LockRenderThread();
          }
-      }
-      if (primed)
-      {
-         SubmitFrame();
-         FinishFrame();
-         LockRenderThread();
       }
    }
 #endif
