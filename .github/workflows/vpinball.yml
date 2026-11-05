@@ -90,14 +90,7 @@ jobs:
         run: |
           if [[ "${{ needs.context.outputs.is_pr }}" != "true" ]]; then
             DESKTOP='{"include":[
-              {"os":"windows-2025-vs2026","type":"BGFX","platform":"windows","arch":"x64","config":"Release"},
-              {"os":"windows-2025-vs2026","type":"BGFX","platform":"windows","arch":"x86","config":"Release"},
-              {"os":"windows-2025-vs2026","type":"BGFX","platform":"windows-mingw","arch":"x64","config":"Release"},
-              {"os":"macos-15","type":"BGFX","platform":"macos","arch":"arm64","config":"Release"},
-              {"os":"macos-15","type":"BGFX","platform":"macos","arch":"x64","config":"Release"},
-              {"os":"ubuntu-24.04","type":"BGFX","platform":"linux","arch":"x64","config":"Release"},
-              {"os":"windows-2025-vs2026","type":"GL","platform":"windows","arch":"x64","config":"Release"},
-              {"os":"windows-2025-vs2026","type":"GL","platform":"windows","arch":"x86","config":"Release"}
+              {"os":"ubuntu-24.04","type":"BGFX","platform":"linux","arch":"x64","config":"Release"}
             ]}'
             SBC='{"include":[
               {"os":"ubuntu-24.04-arm","type":"BGFX","board":"rpi","platform":"linux","arch":"aarch64","config":"Release"},
@@ -319,6 +312,7 @@ jobs:
           archive: false
 
   build-dx:
+    if: false
     name: Build VPinballX-${{ matrix.platform }}-${{ matrix.arch }}-${{ matrix.config }}
     runs-on: windows-2025-vs2026
     needs: [ context, version, matrix ]
@@ -407,6 +401,7 @@ jobs:
           archive: false
 
   build-sbc:
+    if: false
     name: Build VPinballX_${{ matrix.type }}-${{ matrix.board }}-${{ matrix.platform }}-${{ matrix.arch }}-${{ matrix.config }}
     runs-on: ${{ matrix.os }}
     needs: [ context, version, matrix ]
@@ -479,6 +474,7 @@ jobs:
           archive: false
 
   build-ios:
+    if: false
     name: Build VPinballX_BGFX-ios-${{ matrix.config }}
     runs-on: macos-26
     needs: [ context, version ]
@@ -552,6 +548,7 @@ jobs:
           archive: false
 
   build-android:
+    if: false
     name: Build VPinballX_BGFX-android-${{ matrix.flavor }}-${{ matrix.config }}
     runs-on: ubuntu-24.04
     needs: [ context, version, matrix ]
@@ -682,6 +679,7 @@ jobs:
           archive: false
 
   build-wasm:
+    if: false
     name: Build VPinballX_BGFX-wasm-${{ matrix.config }}
     runs-on: ubuntu-24.04
     needs: [ context, version ]
