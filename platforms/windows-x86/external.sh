@@ -212,7 +212,7 @@ if [ "${PINMAME_EXPECTED_SHA}" != "${PINMAME_FOUND_SHA}" ]; then
    mkdir pinmame
    cd pinmame
 
-   curl -sL https://github.com/vpinball/pinmame/archive/${PINMAME_SHA}.tar.gz -o pinmame-${PINMAME_SHA}.tar.gz
+   curl -sL https://github.com/Le-Syl21/pinmame/archive/${PINMAME_SHA}.tar.gz -o pinmame-${PINMAME_SHA}.tar.gz
    tar xzf pinmame-${PINMAME_SHA}.tar.gz
    mv pinmame-${PINMAME_SHA} pinmame
    cd pinmame
@@ -451,7 +451,7 @@ if [ "${LIBALTSOUND_EXPECTED_SHA}" != "${LIBALTSOUND_FOUND_SHA}" ]; then
    mkdir libaltsound
    cd libaltsound
 
-   curl -sL https://github.com/vpinball/libaltsound/archive/${LIBALTSOUND_SHA}.tar.gz -o libaltsound-${LIBALTSOUND_SHA}.tar.gz
+   curl -sL https://github.com/Le-Syl21/libaltsound/archive/${LIBALTSOUND_SHA}.tar.gz -o libaltsound-${LIBALTSOUND_SHA}.tar.gz
    tar xzf libaltsound-${LIBALTSOUND_SHA}.tar.gz
    mv libaltsound-${LIBALTSOUND_SHA} libaltsound
    cd libaltsound
