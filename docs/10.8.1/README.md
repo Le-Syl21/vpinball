@@ -15,6 +15,8 @@
 - **[Rendering](rendering_eng.md)** — frame pacing, anti-aliasing, reflections,
   stereo.
 - **[Audio](audio_eng.md)** — devices, speaker modes, the per-source gain.
+- **[AltSound packs](altsound_eng.md)** — the `new_sound_commands` key and how to
+  tell which command stream a pack was made for.
 - **[Plugins](plugins_eng.md)** — one section per plugin, and where their keys
   really come from.
 - **[Files and folders](files_eng.md)** — the layout deduced from the ini, the
@@ -36,6 +38,8 @@
   stéréo.
 - **[Audio](audio_fra.md)** — périphériques, modes d'enceintes, le gain par
   source.
+- **[Packs AltSound](altsound_fra.md)** — la clé `new_sound_commands` et comment
+  savoir pour quel flux de commandes un pack est fait.
 - **[Plugins](plugins_fra.md)** — une section par plugin, et d'où viennent
   vraiment leurs clés.
 - **[Fichiers et dossiers](files_fra.md)** — la disposition déduite de l'ini, le
