@@ -60,7 +60,6 @@ if [ "${SDL3_EXPECTED_SHA}" != "${SDL3_FOUND_SHA}" ]; then
    mv SDL-${SDL_SHA} SDL
    cd SDL
    cmake \
-      -G "Visual Studio 18 2026" \
       -A Win32 \
       -DSDL_SHARED=ON \
       -DSDL_STATIC=OFF \
@@ -75,7 +74,6 @@ if [ "${SDL3_EXPECTED_SHA}" != "${SDL3_FOUND_SHA}" ]; then
    cd SDL_image
    ./external/download.sh
    cmake \
-      -G "Visual Studio 18 2026" \
       -A Win32 \
       -DBUILD_SHARED_LIBS=ON \
       -DSDLIMAGE_SAMPLES=OFF \
@@ -94,7 +92,6 @@ if [ "${SDL3_EXPECTED_SHA}" != "${SDL3_FOUND_SHA}" ]; then
    cd SDL_ttf
    ./external/download.sh
    cmake \
-      -G "Visual Studio 18 2026" \
       -A Win32 \
       -DBUILD_SHARED_LIBS=ON \
       -DSDLTTF_SAMPLES=OFF \
@@ -129,7 +126,6 @@ if [ "${FREEIMAGE_EXPECTED_SHA}" != "${FREEIMAGE_FOUND_SHA}" ]; then
    mv freeimage-${FREEIMAGE_SHA} freeimage
    cd freeimage
    cmake \
-      -G "Visual Studio 18 2026" \
       -A Win32 \
       -DPLATFORM=win \
       -DARCH=x86 \
@@ -165,7 +161,7 @@ if [ "${BGFX_EXPECTED_SHA}" != "${BGFX_FOUND_SHA}" ]; then
    cd bgfx.cmake
    rm -rf bgfx
    mv ../bgfx-${BGFX_PATCH_SHA} bgfx
-   cmake -G "Visual Studio 18 2026" \
+   cmake \
       -S. \
       -A Win32 \
       -DBGFX_LIBRARY_TYPE=STATIC \
@@ -179,7 +175,7 @@ if [ "${BGFX_EXPECTED_SHA}" != "${BGFX_FOUND_SHA}" ]; then
 
    # Build shaderc as a host tool (always Release: it only runs at build time to
    # compile the embedded shaders, see src/shaders/bgfx/shaders.cmake)
-   cmake -G "Visual Studio 18 2026" \
+   cmake \
       -S. \
       -A x64 \
       -DBGFX_BUILD_TOOLS=ON \
@@ -218,7 +214,6 @@ if [ "${PINMAME_EXPECTED_SHA}" != "${PINMAME_FOUND_SHA}" ]; then
    cd pinmame
    cp cmake/libpinmame/CMakeLists.txt .
    cmake \
-      -G "Visual Studio 18 2026" \
       -A Win32 \
       -DPLATFORM=win \
       -DARCH=x86 \
@@ -279,7 +274,6 @@ if [ "${OPENXR_EXPECTED_SHA}" != "${OPENXR_FOUND_SHA}" ]; then
    mv OpenXR-SDK-Source-${OPENXR_SHA} openxr
    cd openxr
    cmake \
-      -G "Visual Studio 18 2026" \
       -A Win32 \
       -DBUILD_WITH_SYSTEM_JSONCPP=OFF \
       -DBUILD_TESTS=OFF \
@@ -315,7 +309,6 @@ if [ "${LIBDMDUTIL_EXPECTED_SHA}" != "${LIBDMDUTIL_FOUND_SHA}" ]; then
    cd libdmdutil
    ENABLE_SERUM=OFF ENABLE_VNI=OFF ENABLE_PUP=OFF ./platforms/win/x86/external.sh
    cmake \
-      -G "Visual Studio 18 2026" \
       -A Win32 \
       -DPLATFORM=win \
       -DARCH=x86 \
@@ -353,7 +346,6 @@ if [ "${LIBSERUM_EXPECTED_SHA}" != "${LIBSERUM_FOUND_SHA}" ]; then
    cd libserum
    ./platforms/win/x86/external.sh
    cmake \
-      -G "Visual Studio 18 2026" \
       -A Win32 \
       -DPLATFORM=win \
       -DARCH=x86 \
@@ -387,7 +379,6 @@ if [ "${LIBPUPDMD_EXPECTED_SHA}" != "${LIBPUPDMD_FOUND_SHA}" ]; then
    mv libpupdmd-${LIBPUPDMD_SHA} libpupdmd
    cd libpupdmd
    cmake \
-      -G "Visual Studio 18 2026" \
       -A Win32 \
       -DPLATFORM=win \
       -DARCH=x86 \
@@ -422,7 +413,6 @@ if [ "${LIBVNI_EXPECTED_SHA}" != "${LIBVNI_FOUND_SHA}" ]; then
    cd libvni
    ./platforms/win/x86/external.sh
    cmake \
-      -G "Visual Studio 18 2026" \
       -A Win32 \
       -DPLATFORM=win \
       -DARCH=x86 \
@@ -456,7 +446,6 @@ if [ "${LIBALTSOUND_EXPECTED_SHA}" != "${LIBALTSOUND_FOUND_SHA}" ]; then
    mv libaltsound-${LIBALTSOUND_SHA} libaltsound
    cd libaltsound
    cmake \
-      -G "Visual Studio 18 2026" \
       -A Win32 \
       -DPLATFORM=win \
       -DARCH=x86 \
@@ -491,7 +480,6 @@ if [ "${LIBDOF_EXPECTED_SHA}" != "${LIBDOF_FOUND_SHA}" ]; then
    cd libdof
    ./platforms/win/x86/external.sh
    cmake \
-      -G "Visual Studio 18 2026" \
       -A Win32 \
       -DPLATFORM=win \
       -DARCH=x86 \
@@ -578,7 +566,6 @@ if [ "${ZLIB_EXPECTED_SHA}" != "${ZLIB_FOUND_SHA}" ]; then
    cd zlib
    sed -i.bak '/set(CMAKE_DEBUG_POSTFIX "d")/d' CMakeLists.txt
    cmake \
-      -G "Visual Studio 18 2026" \
       -A Win32 \
       -DBUILD_SHARED_LIBS=OFF \
       -DZLIB_BUILD_SHARED=OFF \
@@ -613,7 +600,6 @@ if [ "${OPUS_EXPECTED_SHA}" != "${OPUS_FOUND_SHA}" ]; then
    mv ogg-${LIBOGG_SHA} ogg
    cd ogg
    cmake \
-      -G "Visual Studio 18 2026" \
       -A Win32 \
       -DCMAKE_POLICY_DEFAULT_CMP0091=NEW \
       -DCMAKE_MSVC_RUNTIME_LIBRARY="MultiThreaded\$<\$<CONFIG:Debug>:Debug>" \
@@ -631,7 +617,6 @@ if [ "${OPUS_EXPECTED_SHA}" != "${OPUS_FOUND_SHA}" ]; then
    mv opus-${LIBOPUS_SHA} opus
    cd opus
    cmake \
-      -G "Visual Studio 18 2026" \
       -A Win32 \
       -DCMAKE_POLICY_DEFAULT_CMP0091=NEW \
       -DCMAKE_MSVC_RUNTIME_LIBRARY="MultiThreaded\$<\$<CONFIG:Debug>:Debug>" \
@@ -650,7 +635,6 @@ if [ "${OPUS_EXPECTED_SHA}" != "${OPUS_FOUND_SHA}" ]; then
    mv opusfile-${OPUSFILE_SHA} opusfile
    cd opusfile
    cmake \
-      -G "Visual Studio 18 2026" \
       -A Win32 \
       -DCMAKE_POLICY_DEFAULT_CMP0091=NEW \
       -DCMAKE_MSVC_RUNTIME_LIBRARY="MultiThreaded\$<\$<CONFIG:Debug>:Debug>" \
@@ -690,7 +674,6 @@ if [ "${LIBMYSOFA_EXPECTED_SHA}" != "${LIBMYSOFA_FOUND_SHA}" ]; then
    cd libmysofa
    sed -i.bak '/find_program(NUGET nuget)/,/zlib-1.3.1\/include\/)/c\  include(FindZLIB)\n  include_directories(${ZLIB_INCLUDE_DIRS})' src/CMakeLists.txt
    cmake \
-      -G "Visual Studio 18 2026" \
       -A Win32 \
       -DBUILD_SHARED_LIBS=OFF \
       -DBUILD_STATIC_LIBS=ON \
@@ -729,7 +712,6 @@ if [ "${LIBSPATIALAUDIO_EXPECTED_SHA}" != "${LIBSPATIALAUDIO_FOUND_SHA}" ]; then
    mv libspatialaudio-${LIBSPATIALAUDIO_SHA} libspatialaudio
    cd libspatialaudio
    cmake \
-      -G "Visual Studio 18 2026" \
       -A Win32 \
       -DBUILD_SHARED_LIBS=OFF \
       -DBUILD_TESTING=OFF \
