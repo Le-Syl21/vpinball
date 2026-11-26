@@ -1,4 +1,4 @@
-# Fichiers et dossiers en 10.8.1
+# Fichiers et dossiers en 10.9.0
 
 [← Index](README.md#-français) · [🇬🇧 English](files_eng.md) · 🇫🇷 Français
 
@@ -29,10 +29,12 @@ accès en écriture au dossier d'installation.
 ## Où va quoi
 
 Le dossier de préférences est `SDL_GetPrefPath(nullptr, "VPinballX")` suivi
-d'un sous-dossier `majeure.mineure` — soit `~/.local/share/VPinballX/10.8/` sous
-Linux, `%AppData%\VPinballX\10.8\` sous Windows. Le regroupement par version
+d'un sous-dossier `majeure.mineure` — soit `~/.local/share/VPinballX/10.9/` sous
+Linux, `%AppData%\VPinballX\10.9\` sous Windows. Le regroupement par version
 mineure est volontaire : une révision mineure n'a pas le droit d'exiger une
-reconfiguration.
+reconfiguration. Quand ce dossier n'existe pas encore, VPX le crée et y copie le
+plus récent des précédents : au premier lancement de la 10.9, le dossier 10.8
+est recopié, donc les réglages suivent. Ensuite chaque version garde sa copie.
 
 | Contenu | `AppPrefData` | `AppOnly` |
 |---|---|---|

@@ -1,4 +1,4 @@
-# VR in 10.8.1
+# VR in 10.9.0
 
 [← Index](README.md#-english) · 🇬🇧 English · [🇫🇷 Français](vr_fra.md)
 

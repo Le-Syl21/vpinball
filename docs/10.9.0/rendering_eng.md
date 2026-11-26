@@ -1,4 +1,4 @@
-# Rendering in 10.8.1
+# Rendering in 10.9.0
 
 [← Index](README.md#-english) · 🇬🇧 English · [🇫🇷 Français](rendering_fra.md)
 

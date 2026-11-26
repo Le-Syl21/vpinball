@@ -1,8 +1,8 @@
-# Vue et ajustement cabinet en 10.8.1
+# Vue et ajustement cabinet en 10.9.0
 
 [← Index](README.md#-français) · [🇬🇧 English](view_eng.md) · 🇫🇷 Français
 
-La 10.8.1 ajoute l'ajustement automatique de la vue pour les cabinets, et avec
+La 10.9.0 ajoute l'ajustement automatique de la vue pour les cabinets, et avec
 lui une dépendance que la plupart des tables n'ont jamais eu à satisfaire : la
 hauteur de la vitre.
 

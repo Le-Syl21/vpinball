@@ -2,7 +2,7 @@
 
 [← Index](README.md#-français) · [🇬🇧 English](altsound_eng.md) · 🇫🇷 Français
 
-Pour ceux qui font des packs AltSound. Dans la 10.8.1 (PinMAME 3.7 et suivantes), PinMAME
+Pour ceux qui font des packs AltSound. Dans la 10.9.0 (PinMAME 3.7 et suivantes), PinMAME
 journalise autrement les commandes son de certaines machines anciennes, et un pack fait avant
 peut ne plus retrouver ses sons. Une clé dans l'`altsound.ini` du pack permet de garder les
 deux cas.

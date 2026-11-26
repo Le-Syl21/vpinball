@@ -1,4 +1,4 @@
-# Plugins en 10.8.1
+# Plugins en 10.9.0
 
 [← Index](README.md#-français) · [🇬🇧 English](plugins_eng.md) · 🇫🇷 Français
 

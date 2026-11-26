@@ -1,4 +1,4 @@
-# VPinballX 10.8.1 — configuration
+# VPinballX 10.9.0 — configuration
 
 🇬🇧 [English](#-english) | 🇫🇷 [Français](#-français)
 

@@ -1,4 +1,4 @@
-# Windows and displays in 10.8.1
+# Windows and displays in 10.9.0
 
 [← Index](README.md#-english) · 🇬🇧 English · [🇫🇷 Français](window_fra.md)
 

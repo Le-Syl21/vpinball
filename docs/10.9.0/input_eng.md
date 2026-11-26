@@ -1,8 +1,8 @@
-# Input and nudge in 10.8.1
+# Input and nudge in 10.9.0
 
 [← Index](README.md#-english) · 🇬🇧 English · [🇫🇷 Français](input_fra.md)
 
-10.8.1 replaced the plunger and nudge input handling. The old
+10.9.0 replaced the plunger and nudge input handling. The old
 `Mapping.PlungerPos` / `Mapping.NudgeX1` keys are gone and are no longer read.
 What follows is the schema that replaced them, and the chain a reading travels
 through before it reaches the ball.

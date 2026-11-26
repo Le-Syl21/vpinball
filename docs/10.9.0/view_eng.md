@@ -1,8 +1,8 @@
-# View and cabinet fitting in 10.8.1
+# View and cabinet fitting in 10.9.0
 
 [← Index](README.md#-english) · 🇬🇧 English · [🇫🇷 Français](view_fra.md)
 
-10.8.1 adds automatic view fitting for cabinets, and with it a dependency most
+10.9.0 adds automatic view fitting for cabinets, and with it a dependency most
 tables have never had to satisfy: the height of the glass.
 
 ## Three projections

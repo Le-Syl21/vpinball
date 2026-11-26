@@ -1,4 +1,4 @@
-# Files and folders in 10.8.1
+# Files and folders in 10.9.0
 
 [← Index](README.md#-english) · 🇬🇧 English · [🇫🇷 Français](files_fra.md)
 
@@ -27,9 +27,12 @@ anywhere. It still works, and it needs write access to the install folder.
 ## Where each thing lives
 
 The preference folder is `SDL_GetPrefPath(nullptr, "VPinballX")` followed by a
-`major.minor` subfolder — so `~/.local/share/VPinballX/10.8/` on Linux,
-`%AppData%\VPinballX\10.8\` on Windows. Settings are grouped per minor version
+`major.minor` subfolder — so `~/.local/share/VPinballX/10.9/` on Linux,
+`%AppData%\VPinballX\10.9\` on Windows. Settings are grouped per minor version
 on purpose: minor revisions are not allowed to require a user setup change.
+When that folder does not exist yet, VPX creates it and fills it with a copy of
+the newest earlier one: on the first 10.9 start, the 10.8 folder is copied, so
+the settings carry over. From then on each version keeps its own copy.
 
 | Content | `AppPrefData` | `AppOnly` |
 |---|---|---|

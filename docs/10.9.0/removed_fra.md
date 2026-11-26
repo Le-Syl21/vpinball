@@ -1,4 +1,4 @@
-# Réglages supprimés en 10.8.1
+# Réglages supprimés en 10.9.0
 
 [← Index](README.md#-français) · [🇬🇧 English](removed_eng.md) · 🇫🇷 Français
 

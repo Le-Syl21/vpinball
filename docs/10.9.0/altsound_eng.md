@@ -2,7 +2,7 @@
 
 [← Index](README.md#-english) · 🇬🇧 English · [🇫🇷 Français](altsound_fra.md)
 
-For people who make AltSound packs. In 10.8.1 (PinMAME 3.7 and later) PinMAME logs the
+For people who make AltSound packs. In 10.9.0 (PinMAME 3.7 and later) PinMAME logs the
 sound commands of some older machines differently, and a pack made before that can stop
 finding its sounds. One key in the pack's `altsound.ini` keeps both worlds working.
 
